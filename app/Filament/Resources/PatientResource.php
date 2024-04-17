@@ -23,8 +23,23 @@ class PatientResource extends Resource
     {
         return $form
         ->schema([
-            Forms\Components\Select::make('owner_id')
+        
+            Forms\Components\TextInput::make('name')
+            ->required()
+            ->maxLength(255),
+        Forms\Components\Select::make('type')
+            ->options([
+                'cat' => 'Cat',
+                'dog' => 'Dog',
+                'rabbit' => 'Rabbit',
+            ])
+            ->required(),
+        Forms\Components\DatePicker::make('date_of_birth')
+            ->required()
+            ->maxDate(now()),
+        Forms\Components\Select::make('owner_id')
             ->relationship('owner', 'name')
+            ->required()
             ->searchable()
             ->preload()
             ->createOptionForm([
